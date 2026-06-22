@@ -1,13 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom';
-
 import { customersRoutes } from '@/features/customers/routes';
-import { RootLayout } from '@/routes/RootLayout';
+import { App } from '@/routes/App';
 import { RouteErrorBoundary } from '@/routes/RouteErrorBoundary';
 
 export const router = createBrowserRouter([
     {
         path: '/',
-        element: <RootLayout />, // RootLayout is the parent route of all routes in the app, so it wraps all pages. This is where you put your layout shell (sidebar, topbar, etc.) that you want to show on every page.
+        element: <App />, // is the parent route of all routes in the app, so it wraps all pages. This is where you put your layout shell (sidebar, topbar, etc.) that you want to show on every page.
         errorElement: <RouteErrorBoundary />, // This is the error boundary for the routed subtree, so it will catch errors from any route component rendered inside the <Outlet /> of RootLayout. It does NOT catch errors from event handlers or async code in components, those need their own try/catch.
         children: [
             // All routes in the app go here as children of RootLayout, so they will be rendered inside the <Outlet /> of RootLayout. The <Outlet /> is like a placeholder that gets replaced by the matched child route component.

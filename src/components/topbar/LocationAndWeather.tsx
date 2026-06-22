@@ -202,9 +202,11 @@ const LocationAndWeather = () => {
     return (
         <div className="text-sm flex items-center gap-2" title={label}>
             <Icon className="w-[16px] h-[16px] text-primary" />
+            {/* turned off
             <span className="text-sm">
                 {location.city ?? '?'}
             </span>
+            */}
         </div>
     );
 };

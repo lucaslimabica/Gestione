@@ -4,9 +4,9 @@ export function Home() {
         <div className="flex min-h-screen items-center justify-center bg-base text-main">
             <div className="text-center">
                 <h1 className="text-4xl font-bold text-main tracking-tight">
-                    Appendix
+                    Quadro
                 </h1>
-                <p className="mt-2 text-slate-400">Página da Home</p>
+                <p className="mt-2 text-slate-400">Aqui Ficarão seus Post-it's</p>
                 <div className="custom-button mt-4">{/*Empty*/}</div>
             </div>
         </div>
