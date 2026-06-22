@@ -1,0 +1,78 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   Maps CSS variables to Tailwind utility classes (e.g., bg-base, text-main)
+   ==========================================================================
+*/
+@theme {
+    --color-base: var(--bg-base);
+    --color-surface: var(--bg-surface);
+
+    --color-main: var(--text-main);
+
+    --color-border-main: var(--border-main);
+
+    --color-primary: var(--primary);
+    --color-primary-hover: var(--primary-hover);
+    --color-secondary: var(--secondary);
+
+    /* Dynamic shadow color that scales intensity based on the active theme */
+    --color-theme-shadow: var(--shadow-base);
+}
+
+/* ==========================================================================
+   2. THEMES LIST
+   ==========================================================================
+*/
+
+/* Theme 1: Light (Default Clean) */
+.light,
+:root {
+    --bg-base: #f8fafc; /* slate-50 */
+    --bg-surface: #ffffff; /* Pure white for Cards/Sidebar */
+
+    --text-main: #0f172a; /* slate-900 */
+    --text-muted: #64748b; /* slate-500 */
+
+    --border-main: #77879b; /* slate-200 */
+
+    --primary: #059669; /* emerald-600 */
+    --primary-hover: #047857; /* emerald-700 */
+    --secondary: #3b82f6; /* blue-500 */
+
+    --shadow-base: rgba(15, 23, 42, 0.06);
+}
+
+/* Theme 2: Dark (Executive Gray) */
+.dark {
+    --bg-base: #0f172a; /* slate-900 */
+    --bg-surface: #1e293b; /* slate-800 */
+
+    --text-main: #f8fafc; /* slate-50 */
+    --text-muted: #94a3b8; /* slate-400 */
+
+    --border-main: #334155; /* slate-700 */
+
+    --primary: #10b981; /* emerald-500 */
+    --primary-hover: #059669; /* emerald-600 */
+    --secondary: #60a5fa; /* blue-400 */
+
+    --shadow-base: rgba(0, 0, 0, 0.3);
+}
+
+/* Theme 3: Midnight (Deep Purple / Space Lux) */
+.midnight {
+    --bg-base: #0b071e; /* Deep purplish-black background */
+    --bg-surface: #130f35; /* Dark purple surface for containers */
+
+    --text-main: #f3f0ff; /* Light lavender text */
+    --text-muted: #9a8fcd; /* Support violet text */
+
+    --border-main: #251e54; /* Purple structural borders */
+
+    --primary: #8b5cf6; /* purple-500 */
+    --primary-hover: #7c3aed; /* purple-600 */
+    --secondary: #ec4899; /* pink-500 */
+
+    --shadow-base: rgba(139, 92, 246, 0.2);
+}
