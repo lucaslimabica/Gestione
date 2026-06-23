@@ -2,7 +2,7 @@ import { ThemeToggler } from '@/components/topbar/ToggleThemeButton';
 import Title from '@/components/topbar/Title';
 import Clock from '@/components/topbar/Clock';
 import LocationAndWeather from '@/components/topbar/LocationAndWeather';
-import UserIcon from '@/components/topbar/UserIcon';
+//import UserIcon from '@/components/topbar/UserIcon';
 import NavBar from '@/components/topbar/NavBar';
 
 const TopBar = () => {

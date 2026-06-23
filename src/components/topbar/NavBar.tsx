@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Car, House, IdCardLanyard, BanknoteArrowDown, BanknoteArrowUp, Calendar1 } from 'lucide-react'; 
 
 export const NavBar = () => {

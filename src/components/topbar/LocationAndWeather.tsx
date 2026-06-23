@@ -44,7 +44,7 @@ const DEFAULT_WEATHER: WeatherData = {
 };
 
 const LocationAndWeather = () => {
-    const [location, setLocation] = useState<LocationData>(DEFAULT_LOCATION);
+    const [, setLocation] = useState<LocationData>(DEFAULT_LOCATION); // Removed the location before the sset as it isn't used in this alpha model
     const [weather, setWeather] = useState<WeatherData>(DEFAULT_WEATHER);
 
     // Function to reverse-geocode lat/lon into a human-readable loc
