@@ -1,10 +1,9 @@
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useUpdatePostIt } from "@/hooks/usePostIts";
-import type { PostIt } from "@/types";
 
-interface PostItModalProps {
-    postIt: PostIt;
+import { useCreatePostIt } from "@/hooks/usePostIts";
+
+interface PostItCreationModalProps {
     onClose: () => void;
 }
 
@@ -14,16 +13,18 @@ const PRIORITY_OPTIONS = [
     { value: 3, label: 'Alta' },
 ];
 
-export default function PostItModal({ postIt, onClose }: PostItModalProps) { // Here it uses the PostIt already created
-    const [title, setTitle] = useState(postIt.title);
-    const [content, setContent] = useState(postIt.content ?? '');
-    const [color, setColor] = useState(postIt.color || '#FEF08A');
-    const [priority, setPriority] = useState(postIt.priority);
-    const [startDate, setStartDate] = useState(postIt.start_date ?? '');
-    //const [endDate, setEndDate] = useState(postIt.end_date ?? '');
-    const [deadline, setDeadline] = useState(postIt.deadline ?? '');
+const DEFAULT_COLOR = '#FEF08A';
 
-    const { mutate, isPending, error } = useUpdatePostIt();
+export default function PostItCreationModal({ onClose }: PostItCreationModalProps) { // Whitout any PostIt as parameter cause we are about to create it
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+    const [color, setColor] = useState(DEFAULT_COLOR);
+    const [priority, setPriority] = useState(1);
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [deadline, setDeadline] = useState('');
+
+    const { mutate, isPending, error } = useCreatePostIt();
 
     useEffect(() => {
         const onKeyDown = (e: KeyboardEvent) => {
@@ -36,13 +37,12 @@ export default function PostItModal({ postIt, onClose }: PostItModalProps) { // 
     const handleSave = () => {
         mutate(
             {
-                id: postIt.id,
                 title,
                 content: content || null,
                 color,
                 priority,
                 start_date: startDate || null,
-                end_date: deadline || null,
+                end_date: endDate || null,
                 deadline: deadline || null,
             },
             { onSuccess: onClose },
@@ -64,7 +64,8 @@ export default function PostItModal({ postIt, onClose }: PostItModalProps) { // 
                         className="w-full rounded bg-white/40 px-2 py-1 text-lg font-semibold outline-none focus:bg-white/60"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        placeholder="Título"
+                        placeholder="Novo Lembrete"
+                        autoFocus
                     />
                     <button
                         className="shrink-0 rounded-full p-1 hover:bg-black/10"
@@ -80,7 +81,7 @@ export default function PostItModal({ postIt, onClose }: PostItModalProps) { // 
                     rows={4}
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
-                    placeholder="Conteúdo"
+                    placeholder="O que deve ser escrito no lembrete?"
                 />
 
                 <div className="mt-3 grid grid-cols-2 gap-3">
@@ -115,6 +116,15 @@ export default function PostItModal({ postIt, onClose }: PostItModalProps) { // 
                         />
                     </label>
                     <label className="text-xs font-medium text-slate-700">
+                        Fim
+                        <input
+                            type="date"
+                            className="mt-1 w-full rounded bg-white/40 px-2 py-1.5 text-sm outline-none focus:bg-white/60"
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                        />
+                    </label>
+                    <label className="text-xs font-medium text-slate-700">
                         Prazo
                         <input
                             type="date"
@@ -127,7 +137,7 @@ export default function PostItModal({ postIt, onClose }: PostItModalProps) { // 
 
                 {error && (
                     <p className="mt-3 text-xs font-medium text-red-700">
-                        Não foi possível salvar. Tente novamente.
+                        Não foi possível criar o post-it. Tente novamente.
                     </p>
                 )}
 
@@ -144,7 +154,7 @@ export default function PostItModal({ postIt, onClose }: PostItModalProps) { // 
                         onClick={handleSave}
                         disabled={isPending || !title.trim()}
                     >
-                        {isPending ? 'Salvando...' : 'Salvar'}
+                        {isPending ? 'Criando...' : 'Criar'}
                     </button>
                 </div>
             </div>
