@@ -1,3 +1,5 @@
+// The Card to be shown in the vehicles page
+
 import type { Vehicle } from "@/types";
 
 // Interface declaration to be used as a shape
@@ -6,14 +8,17 @@ interface VehicleCardProps {
     onClick?: () => void;
 }
 
+// Typing the deadline options as string
 type DeadlineStatus = 'overdue' | 'soon' | 'ok';
 
+// This const storages the color to be used ahead
 const STATUS_COLOR: Record<DeadlineStatus, string> = {
     overdue: '#dc2626',
     soon: '#b45309',
     ok: 'var(--color-main)',
 };
 
+// Calculates the deadline based on today and return a DeadlineStatus string (one of three)
 const getDeadlineStatus = (date: string | null): DeadlineStatus | null => {
     if (!date) return null;
     const diffDays = (new Date(date).getTime() - Date.now()) / 86_400_000;
@@ -22,11 +27,13 @@ const getDeadlineStatus = (date: string | null): DeadlineStatus | null => {
     return 'ok';
 };
 
+// Returns the date as formated string
 const formatDate = (date: string | null) => {
     if (!date) return '—';
     return new Date(date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
 };
 
+// This const storages the deadline fields name to be used ahead
 const DEADLINE_FIELDS: { key: keyof Vehicle; label: string }[] = [
     { key: 'inspection_deadline', label: 'Vistoria' },
     { key: 'insurance_deadline', label: 'Seguro' },

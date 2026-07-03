@@ -1,8 +1,10 @@
+// The modal/pop-up to be shown as you click on the vehicles card
+
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
-
 import { useUpdateVehicle } from "@/hooks/useVehicles";
 import type { Vehicle } from "@/types";
+
 
 interface VehicleModalProps {
     vehicle: Vehicle;
@@ -20,7 +22,7 @@ export default function VehicleModal({ vehicle, onClose }: VehicleModalProps) {
 
     const { mutate, isPending, error } = useUpdateVehicle();
 
-    useEffect(() => {
+    useEffect(() => { // This block is for the closer as 'Esc' is pressed
         const onKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') onClose();
         };
@@ -29,7 +31,7 @@ export default function VehicleModal({ vehicle, onClose }: VehicleModalProps) {
     }, [onClose]);
 
     const handleSave = () => {
-        mutate(
+        mutate( // This is the updated function
             {
                 id: vehicle.id,
                 brand_model: brandModel,
@@ -44,7 +46,8 @@ export default function VehicleModal({ vehicle, onClose }: VehicleModalProps) {
         );
     };
 
-    return (
+    // The forms
+    return ( 
         <div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
             onClick={onClose}
