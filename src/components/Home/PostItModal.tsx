@@ -22,6 +22,7 @@ export default function PostItModal({ postIt, onClose }: PostItModalProps) { // 
     const [startDate, setStartDate] = useState(postIt.start_date ?? '');
     //const [endDate, setEndDate] = useState(postIt.end_date ?? '');
     const [deadline, setDeadline] = useState(postIt.deadline ?? '');
+    const [done, setDone] = useState(postIt.done);
 
     const { mutate, isPending, error } = useUpdatePostIt();
 
@@ -42,8 +43,9 @@ export default function PostItModal({ postIt, onClose }: PostItModalProps) { // 
                 color,
                 priority,
                 start_date: startDate || null,
-                end_date: deadline || null,
+                end_date: null,
                 deadline: deadline || null,
+                done,
             },
             { onSuccess: onClose },
         );
@@ -122,6 +124,19 @@ export default function PostItModal({ postIt, onClose }: PostItModalProps) { // 
                             value={deadline}
                             onChange={(e) => setDeadline(e.target.value)}
                         />
+                    </label>
+                    <label className="text-xs font-medium text-slate-700">
+                        Status
+                        <select
+                            id="status"
+                            name="status"
+                            className="mt-1 w-full rounded bg-white/40 px-2 py-1.5 text-sm outline-none focus:bg-white/60"
+                            value={done ? 'done' : 'pending'}
+                            onChange={(e) => setDone(e.target.value === 'done')}
+                        >
+                            <option value="pending">Pendente</option>
+                            <option value="done">Feito</option>
+                        </select>
                     </label>
                 </div>
 
