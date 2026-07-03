@@ -1,6 +1,5 @@
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
-
 import { useCreatePostIt } from "@/hooks/usePostIts";
 
 interface PostItCreationModalProps {
@@ -21,8 +20,9 @@ export default function PostItCreationModal({ onClose }: PostItCreationModalProp
     const [color, setColor] = useState(DEFAULT_COLOR);
     const [priority, setPriority] = useState(1);
     const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
+    // const [endDate, setEndDate] = useState('');
     const [deadline, setDeadline] = useState('');
+    const [done, setDone] = useState(false);
 
     const { mutate, isPending, error } = useCreatePostIt();
 
@@ -42,7 +42,8 @@ export default function PostItCreationModal({ onClose }: PostItCreationModalProp
                 color,
                 priority,
                 start_date: startDate || null,
-                end_date: endDate || null,
+                end_date: null,
+                done,
                 deadline: deadline || null,
             },
             { onSuccess: onClose },
@@ -116,15 +117,6 @@ export default function PostItCreationModal({ onClose }: PostItCreationModalProp
                         />
                     </label>
                     <label className="text-xs font-medium text-slate-700">
-                        Fim
-                        <input
-                            type="date"
-                            className="mt-1 w-full rounded bg-white/40 px-2 py-1.5 text-sm outline-none focus:bg-white/60"
-                            value={endDate}
-                            onChange={(e) => setEndDate(e.target.value)}
-                        />
-                    </label>
-                    <label className="text-xs font-medium text-slate-700">
                         Prazo
                         <input
                             type="date"
@@ -132,6 +124,19 @@ export default function PostItCreationModal({ onClose }: PostItCreationModalProp
                             value={deadline}
                             onChange={(e) => setDeadline(e.target.value)}
                         />
+                    </label>
+                    <label className="text-xs font-medium text-slate-700">
+                        Status
+                        <select
+                            id="status"
+                            name="status"
+                            className="mt-1 w-full rounded bg-white/40 px-2 py-1.5 text-sm outline-none focus:bg-white/60"
+                            value={done ? 'done' : 'pending'}
+                            onChange={(e) => setDone(e.target.value === 'done')}
+                        >
+                            <option value="pending">Pendente</option>
+                            <option value="done">Feito</option>
+                        </select>
                     </label>
                 </div>
 

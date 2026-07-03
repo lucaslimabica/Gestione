@@ -16,6 +16,7 @@ export interface Database {
                     start_date: string | null;
                     end_date: string | null;
                     deadline: string | null;
+                    done: boolean | null;
                 };
                 Insert: {
                     id?: string;
@@ -27,6 +28,7 @@ export interface Database {
                     start_date?: string | null;
                     end_date?: string | null;
                     deadline?: string | null;
+                    done?: boolean | null;
                 };
                 Update: {
                     id?: string;
@@ -38,6 +40,7 @@ export interface Database {
                     start_date?: string | null;
                     end_date?: string | null;
                     deadline?: string | null;
+                    done?: boolean | null;
                 };
                 Relationships: [];
             };
