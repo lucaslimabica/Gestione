@@ -8,6 +8,7 @@ async function fetchPostIts(): Promise<PostIt[]> {
     const { data, error } = await supabase
         .from('post_its')
         .select('*')
+        .eq('done', false)
         .order('priority', { ascending: false })
         .order('created_at', { ascending: true });
 

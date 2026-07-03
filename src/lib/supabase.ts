@@ -1,5 +1,4 @@
 import { createClient } from '@supabase/supabase-js';
-
 import type { Database } from '@/lib/database.types';
 import { env } from '@/lib/env';
 

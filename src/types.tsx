@@ -7,6 +7,7 @@ export interface PostIt {
     priority: number; // Levels for 1 to 3
     start_date: string | null;
     end_date: string | null;
+    done: boolean | null;
     deadline: string | null;
 }
 
