@@ -9,3 +9,15 @@ export interface PostIt {
     end_date: string | null;
     deadline: string | null;
 }
+
+export interface Vehicle {
+    id: string;
+    created_at: string;
+    brand_model: string;
+    license_plate: string;
+    current_driver: string | null;
+    inspection_deadline: string | null;
+    insurance_deadline: string | null;
+    tax_deadline: string | null;
+    observation: string | null;
+}

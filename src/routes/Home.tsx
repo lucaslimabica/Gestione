@@ -1,45 +1,44 @@
 // routes/Home.tsx to be rendered at the root/index route of the app. This is the first page users see when they visit the app.
-import { PostIt } from "@/types";
-import { PostItCard } from "@/components/Home/PostItCard";
 import { useState } from "react";
 
-export function Home() {
+import PostItCard from "@/components/Home/PostItCard";
+import PostItModal from "@/components/Home/PostItModal";
+import { usePostIts } from "@/hooks/usePostIts";
+import type { PostIt } from "@/types";
 
-    // Mocking some post its
-    const [postItsList, setPostItsList] = useState<PostIt[]>([
-        {
-            id: '1',
-            created_at: '',
-            title: 'Reunião',
-            content: 'Discutir as metas de faturação e organização da frota.',
-            color: '#f6953b',
-            priority: 1,
-            start_date: '2026-06-23',
-            end_date: null,
-            deadline: null
-        },  
-        {
-            id: '2',
-            created_at: '',
-            title: 'Revisão do Jetta 01',
-            content: 'Levar o veículo à oficina para troca de óleo. DATA FATAL!',
-            color: '#efb944',
-            priority: 3,
-            start_date: '2026-06-24',
-            end_date: null,
-            deadline: '2026-06-25'
-        }
-    ]);
-    
+export function Home() {
+    const { data: postItsList, isLoading, error } = usePostIts();
+    const [selectedPostIt, setSelectedPostIt] = useState<PostIt | null>(null);
+
     return (
-        <div className="flex min-h-screen items-center justify-center bg-base text-main">
-            <div className="text-center">
-                <h1 className="text-4xl font-bold text-main tracking-tight">
-                    Quadro
-                </h1>
-                <p className="mt-2 text-slate-400">Aqui Ficarão seus Post-it's</p>
-                <div className="custom-button mt-4">{/*Empty*/}</div>
-            </div>
+        <div className="text-main">
+            <h1 className="text-4xl font-bold tracking-tight">
+                Quadro
+            </h1>
+
+            {isLoading && <p className="mt-4 text-main/60">Carregando...</p>}
+            {error && <p className="mt-4 text-red-600">Não foi possível carregar os post-it's.</p>}
+
+            {!isLoading && !error && (
+                postItsList?.length === 0 ?
+                <p className="mt-4 text-main/60">Aqui ficarão seus Post-it's</p> :
+                <div className="mt-6 flex flex-wrap gap-5">
+                    {postItsList?.map(postIt => (
+                        <PostItCard
+                            key={postIt.id}
+                            postIt={postIt}
+                            onClick={() => setSelectedPostIt(postIt)}
+                        />
+                    ))}
+                </div>
+            )}
+
+            {selectedPostIt && (
+                <PostItModal
+                    postIt={selectedPostIt}
+                    onClose={() => setSelectedPostIt(null)}
+                />
+            )}
         </div>
     );
 }

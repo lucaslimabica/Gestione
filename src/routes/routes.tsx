@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { customersRoutes } from '@/features/customers/routes';
+// import { futureRoutes } from '@/features/customers/routes';
 import { App } from '@/routes/App';
 import { RouteErrorBoundary } from '@/routes/RouteErrorBoundary';
 
@@ -19,8 +19,17 @@ export const router = createBrowserRouter([
                 },
             },
 
+            // Frota
+            {
+                path: 'frota',
+                lazy: async () => {
+                    const { Vehicles } = await import('@/routes/Vehicles');
+                    return { Component: Vehicles };
+                },
+            },
+
             // Features, one line per feature
-            ...customersRoutes, // A feature can export an array of routes, which is useful if the feature has multiple pages. The routes can be defined in the same file as the feature's main component for routesis setted, or in a separate file. This keeps all the feature's code together and makes it easy to move or remove the feature later.
+            //...futureRoutes, // A feature can export an array of routes, which is useful if the feature has multiple pages. The routes can be defined in the same file as the feature's main component for routesis setted, or in a separate file. This keeps all the feature's code together and makes it easy to move or remove the feature later.
 
             // 404, must be last
             {
