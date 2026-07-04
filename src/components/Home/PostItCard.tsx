@@ -28,6 +28,7 @@ export default function PostItCard({ postIt, onClick }: PostItCardProps) {
     const priority = getPriorityInfo(postIt.priority);
     const deadline = formatDate(postIt.deadline);
     const startDate = formatDate(postIt.start_date);
+    const bgColor = (postIt.done === false ? postIt.color : '#B3B2AD');
 
     return (
         <div
@@ -38,7 +39,7 @@ export default function PostItCard({ postIt, onClick }: PostItCardProps) {
                 if (e.key === 'Enter' || e.key === ' ') onClick?.();
             }}
             className="flex w-full cursor-pointer flex-col gap-3 rounded-lg p-4 text-slate-900 shadow-[0_8px_16px_var(--color-theme-shadow)] transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_12px_24px_var(--color-theme-shadow)] sm:w-64"
-            style={{ backgroundColor: postIt.color || '#FEF08A' }}
+            style={{ backgroundColor: bgColor || '#FEF08A' }}
         >
             <div className="flex items-start justify-between gap-2">
                 <h1 className="font-semibold leading-tight break-words">{postIt.title}</h1>
