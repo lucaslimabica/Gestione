@@ -30,11 +30,34 @@ export function Home() {
             {isLoading && <p className="mt-4 text-main/60">Carregando...</p>}
             {error && <p className="mt-4 text-red-600">Não foi possível carregar os post-it's.</p>}
 
+
+            {/* Pending Post Its*/} 
             {!isLoading && !error && (
                 postItsList?.length === 0 ?
                 <p className="mt-4 text-main/60">Aqui ficarão seus Post-it's</p> :
                 <div className="mt-6 flex flex-wrap gap-5">
-                    {postItsList?.map(postIt => (
+                    {postItsList?.filter(function (postIt) {
+                        return postIt.done === false;
+                    }).map(postIt => (
+                        <PostItCard
+                            key={postIt.id}
+                            postIt={postIt}
+                            onClick={() => setSelectedPostIt(postIt)}
+                        />
+                    ))}
+                </div>
+            )}
+            
+
+            <h2 className="text-4xl font-bold tracking-tight mt-6">Post-Its Concluídos</h2>
+            {/* Done Post Its*/} 
+            {!isLoading && !error && (
+                postItsList?.length === 0 ?
+                <p className="mt-4 text-main/60">Aqui ficarão seus Post-it's</p> :
+                <div className="mt-6 flex flex-wrap gap-5">
+                    {postItsList?.filter(function (postIt) {
+                        return postIt.done === true;
+                    }).map(postIt => (
                         <PostItCard
                             key={postIt.id}
                             postIt={postIt}
