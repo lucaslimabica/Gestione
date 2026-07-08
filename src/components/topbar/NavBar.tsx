@@ -4,11 +4,11 @@ export const NavBar = () => {
     // Lista de links para deixar o código limpo e fácil de manter
     const navLinks = [
         { href: "/", icon: <House className="h-5 w-5" />, label: "Início" },
-        { href: "/frota", icon: <Car className="h-5 w-5" />, label: "Frota" },
-        { href: "/documentos", icon: <IdCardLanyard className="h-5 w-5" />, label: "Documentos" },
-        { href: "/entradas", icon: <BanknoteArrowDown className="h-5 w-5" />, label: "Entradas" },
-        { href: "/saidas", icon: <BanknoteArrowUp className="h-5 w-5" />, label: "Saídas" },
-        { href: "/calendario", icon: <Calendar1 className="h-5 w-5" />, label: "Calendário" },
+        { href: "/cars", icon: <Car className="h-5 w-5" />, label: "Frota" },
+        { href: "/docs", icon: <IdCardLanyard className="h-5 w-5" />, label: "Documentos" },
+        { href: "/incomes", icon: <BanknoteArrowDown className="h-5 w-5" />, label: "Entradas" },
+        { href: "/outcomes", icon: <BanknoteArrowUp className="h-5 w-5" />, label: "Saídas" },
+        { href: "/calendar", icon: <Calendar1 className="h-5 w-5" />, label: "Calendário" },
     ];
 
     return (

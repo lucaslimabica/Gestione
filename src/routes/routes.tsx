@@ -21,10 +21,19 @@ export const router = createBrowserRouter([
 
             // Frota
             {
-                path: 'frota',
+                path: 'cars',
                 lazy: async () => {
                     const { Vehicles } = await import('@/routes/Vehicles');
                     return { Component: Vehicles };
+                },
+            },
+
+            // Documentos
+            {
+                path: 'docs',
+                lazy: async () => {
+                    const { Documents } = await import('@/routes/Documents');
+                    return { Component: Documents };
                 },
             },
 
