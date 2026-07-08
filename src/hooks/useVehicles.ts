@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-
 import { supabase } from "@/lib/supabase";
 import type { Vehicle } from "@/types";
 
@@ -40,6 +39,30 @@ export function useUpdateVehicle() {
 
     return useMutation({
         mutationFn: updateVehicle,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: vehiclesKey });
+        },
+    });
+}
+
+export type VehicleCreate = Omit<Vehicle, 'id' | 'created_at'>;
+
+async function createVehicle(vehicle: VehicleCreate): Promise<Vehicle> {
+    const { data, error } = await supabase
+        .from('vehicles')
+        .insert(vehicle)
+        .select()
+        .single();
+
+    if (error) throw error;
+    return data;
+}
+
+export function useCreateVehicle() {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: createVehicle,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: vehiclesKey });
         },
