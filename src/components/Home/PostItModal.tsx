@@ -1,6 +1,6 @@
-import { X } from "lucide-react";
+import { X, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useUpdatePostIt } from "@/hooks/usePostIts";
+import { useUpdatePostIt, useDeletePostIt } from "@/hooks/usePostIts";
 import type { PostIt } from "@/types";
 
 interface PostItModalProps {
@@ -24,7 +24,12 @@ export default function PostItModal({ postIt, onClose }: PostItModalProps) { // 
     const [deadline, setDeadline] = useState(postIt.deadline ?? '');
     const [done, setDone] = useState(postIt.done);
 
+    // Show delete confirmation buttons
+    const [isConfirmationButtonVisible, setIsConfirmationButtonVisible] = useState(false);
+
     const { mutate, isPending, error } = useUpdatePostIt();
+    const { mutate: deletePostIt, isPending: isDeleting } = useDeletePostIt();
+
 
     useEffect(() => {
         const onKeyDown = (e: KeyboardEvent) => {
@@ -138,6 +143,30 @@ export default function PostItModal({ postIt, onClose }: PostItModalProps) { // 
                             <option value="done">Feito</option>
                         </select>
                     </label>
+                    <label className="text-xs font-medium text-slate-700">
+                    </label>
+                    <button 
+                        onClick={() => setIsConfirmationButtonVisible(true)}
+                        className="rounded bg-red-500 hover:bg-red-800 text-white p-2 text-sm font-small font-bold inline-flex items-center gap-x-1.5"
+                    >
+                        <Trash2 />
+                        <span>Excluir</span>
+                    </button>
+                    <div className="inline-flex">
+                        <button
+                            onClick={() => deletePostIt({ id: postIt.id }, { onSuccess: onClose })}
+                            disabled={isDeleting}
+                            className={`bg-gray-300 hover:bg-gray-400 text-gray-800 text-xs font-bold py-2 px-4 rounded-l transition-all duration-300 ${isConfirmationButtonVisible ? "block opacity-100" : "hidden opacity-0"}`}
+                        >
+                            <span>Sim</span>
+                        </button>
+                        <button
+                            onClick={() => setIsConfirmationButtonVisible(false)} 
+                            className={`bg-gray-300 hover:bg-gray-400 text-gray-800 text-xs font-bold py-2 px-4 rounded-r transition-all duration-300 ${isConfirmationButtonVisible ? "block opacity-100" : "hidden opacity-0"}`}
+                        >
+                            <span>Não</span>
+                        </button>
+                    </div>
                 </div>
 
                 {error && (
