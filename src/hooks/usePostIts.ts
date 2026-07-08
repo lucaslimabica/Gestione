@@ -84,3 +84,26 @@ export function useCreatePostIt() {
         },
     });
 }
+
+export type PostItDelete = Pick<PostIt, 'id'>;
+
+async function deletePostIt(postIt: PostItDelete): Promise<string> {
+    const { error } = await supabase
+        .from('post_its')
+        .delete()
+        .eq('id', postIt.id);
+
+    if (error) throw error;
+    return postIt.id;
+}
+
+export function useDeletePostIt() {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: deletePostIt,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: postItsKey })
+        },
+    });
+}
