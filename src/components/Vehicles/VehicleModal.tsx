@@ -1,8 +1,8 @@
 // The modal/pop-up to be shown as you click on the vehicles card
 
-import { X } from "lucide-react";
+import { X, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useUpdateVehicle } from "@/hooks/useVehicles";
+import { useUpdateVehicle, useDeleteVehicle } from "@/hooks/useVehicles";
 import type { Vehicle } from "@/types";
 
 
@@ -20,7 +20,11 @@ export default function VehicleModal({ vehicle, onClose }: VehicleModalProps) {
     const [taxDeadline, setTaxDeadline] = useState(vehicle.tax_deadline ?? '');
     const [observation, setObservation] = useState(vehicle.observation ?? '');
 
+    // Show delete confirmation buttons
+    const [isConfirmationButtonVisible, setIsConfirmationButtonVisible] = useState(false);
+
     const { mutate, isPending, error } = useUpdateVehicle();
+    const { mutate: deleteVehicle, isPending: isDeleting } = useDeleteVehicle();
 
     useEffect(() => { // This block is for the closer as 'Esc' is pressed
         const onKeyDown = (e: KeyboardEvent) => {
@@ -127,6 +131,28 @@ export default function VehicleModal({ vehicle, onClose }: VehicleModalProps) {
                             onChange={(e) => setTaxDeadline(e.target.value)}
                         />
                     </label>
+                    <button 
+                        onClick={() => setIsConfirmationButtonVisible(true)}
+                        className="rounded bg-red-500 hover:bg-red-800 text-white p-2 text-sm font-small font-bold inline-flex items-center gap-x-1.5"
+                    >
+                        <Trash2 />
+                        <span>Excluir</span>
+                    </button>
+                    <div className="inline-flex">
+                        <button
+                            onClick={() => deleteVehicle({ id: vehicle.id }, { onSuccess: onClose })}
+                            disabled={isDeleting}
+                            className={`bg-gray-300 hover:bg-gray-400 text-gray-800 text-xs font-bold py-2 px-4 rounded-l transition-all duration-300 ${isConfirmationButtonVisible ? "block opacity-100" : "hidden opacity-0"}`}
+                        >
+                            <span>Sim</span>
+                        </button>
+                        <button
+                            onClick={() => setIsConfirmationButtonVisible(false)} 
+                            className={`bg-gray-300 hover:bg-gray-400 text-gray-800 text-xs font-bold py-2 px-4 rounded-r transition-all duration-300 ${isConfirmationButtonVisible ? "block opacity-100" : "hidden opacity-0"}`}
+                        >
+                            <span>Não</span>
+                        </button>
+                    </div>
                 </div>
 
                 {error && (
