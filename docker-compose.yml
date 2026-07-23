@@ -6,7 +6,7 @@ services:
         container_name: gestione
         restart: unless-stopped
         networks:
-            - traefik
+            - network_liberica
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.gestione.rule=Host(`gestione.liberica.pt`)"
