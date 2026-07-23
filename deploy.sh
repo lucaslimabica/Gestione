@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Deploys the latest master branch of Gestione via Docker Compose.
+# Deploys the latest master branch of Gestione as a Docker Swarm stack.
 # Run this from the server, inside the cloned repo directory.
+# Requires: Swarm already active on this node (it is, since Traefik/network_liberica run on it).
+
+STACK_NAME=gestione
 
 cd "$(dirname "$0")"
 
@@ -14,11 +17,11 @@ git pull --ff-only origin master
 echo "==> Building image"
 docker compose build
 
-echo "==> Restarting container"
-docker compose up -d --remove-orphans
+echo "==> Deploying stack"
+docker stack deploy -c docker-compose.yml "$STACK_NAME"
 
 echo "==> Cleaning up old images"
 docker image prune -f
 
 echo "==> Done. Current status:"
-docker compose ps
+docker stack ps "$STACK_NAME" --no-trunc

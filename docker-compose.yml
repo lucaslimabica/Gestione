@@ -3,16 +3,21 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        container_name: gestione
-        restart: unless-stopped
+        # "docker stack deploy" ignores `build:` - it needs a real image to
+        # schedule. `docker compose build` (run before the stack deploy)
+        # still uses `build:` above and tags the result with this name.
+        image: gestione:latest
         networks:
             - network_liberica
-        labels:
-            - "traefik.enable=true"
-            - "traefik.http.routers.gestione.rule=Host(`gestione.liberica.pt`)"
-            - "traefik.http.routers.gestione.entrypoints=websecure"
-            - "traefik.http.routers.gestione.tls.certresolver=letsencrypt"
-            - "traefik.http.services.gestione.loadbalancer.server.port=80"
+        deploy:
+            restart_policy:
+                condition: any
+            labels:
+                - "traefik.enable=true"
+                - "traefik.http.routers.gestione.rule=Host(`gestione.liberica.pt`)"
+                - "traefik.http.routers.gestione.entrypoints=websecure"
+                - "traefik.http.routers.gestione.tls.certresolver=letsencrypt"
+                - "traefik.http.services.gestione.loadbalancer.server.port=80"
 
 networks:
     network_liberica:
