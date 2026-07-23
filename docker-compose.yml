@@ -1,0 +1,26 @@
+# Before first deploy, check/replace the 4 placeholders below:
+#   1. <DOMINIO_AQUI>       - the real domain (e.g. gestione.example.com)
+#   2. traefik network name - "traefik" is a common default, confirm with:
+#        docker inspect <traefik_container> --format '{{json .NetworkSettings.Networks}}'
+#   3. entrypoints           - "websecure" is Traefik's common default HTTPS entrypoint name
+#   4. certresolver           - "letsencrypt" is a common default name, check your
+#        Traefik static config (traefik.yml / CLI args) for the real resolver name
+services:
+    gestione:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: gestione
+        restart: unless-stopped
+        networks:
+            - traefik
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.gestione.rule=Host(`<DOMINIO_AQUI>`)"
+            - "traefik.http.routers.gestione.entrypoints=websecure"
+            - "traefik.http.routers.gestione.tls.certresolver=letsencrypt"
+            - "traefik.http.services.gestione.loadbalancer.server.port=80"
+
+networks:
+    traefik:
+        external: true
