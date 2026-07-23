@@ -32,11 +32,11 @@ export default function VehicleCreationModal({ onClose }: VehicleModalProps) {
             {
                 brand_model: brandModel,
                 license_plate: licensePlate,
-                current_driver: currentDriver,
-                inspection_deadline: inspectionDeadline,
-                insurance_deadline: insuranceDeadline,
-                tax_deadline: taxDeadline,
-                observation,
+                current_driver: currentDriver || null,
+                inspection_deadline: inspectionDeadline || null,
+                insurance_deadline: insuranceDeadline || null,
+                tax_deadline: taxDeadline || null,
+                observation: observation || null,
             },
             { onSuccess: onClose },
         );
