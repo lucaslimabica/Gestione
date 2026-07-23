@@ -23,6 +23,8 @@ export default function PostItCreationModal({ onClose }: PostItCreationModalProp
     // const [endDate, setEndDate] = useState('');
     const [deadline, setDeadline] = useState('');
     const [done, setDone] = useState(false);
+    const [responsible, setResponsible] = useState('');
+    const [location, setLocation] = useState('');
 
     const { mutate, isPending, error } = useCreatePostIt();
 
@@ -45,6 +47,8 @@ export default function PostItCreationModal({ onClose }: PostItCreationModalProp
                 end_date: null,
                 done,
                 deadline: deadline || null,
+                responsible: responsible || null,
+                location: location || null,
             },
             { onSuccess: onClose },
         );
@@ -137,6 +141,24 @@ export default function PostItCreationModal({ onClose }: PostItCreationModalProp
                             <option value="pending">Pendente</option>
                             <option value="done">Feito</option>
                         </select>
+                    </label>
+                    <label className="text-xs font-medium text-slate-700">
+                        Responsável
+                        <input
+                            className="mt-1 w-full rounded bg-white/40 px-2 py-1.5 text-sm outline-none focus:bg-white/60"
+                            value={responsible}
+                            onChange={(e) => setResponsible(e.target.value)}
+                            placeholder="Nome"
+                        />
+                    </label>
+                    <label className="text-xs font-medium text-slate-700">
+                        Localização
+                        <input
+                            className="mt-1 w-full rounded bg-white/40 px-2 py-1.5 text-sm outline-none focus:bg-white/60"
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                            placeholder="Local"
+                        />
                     </label>
                 </div>
 

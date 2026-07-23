@@ -55,6 +55,13 @@ export default function PostItCard({ postIt, onClick }: PostItCardProps) {
                 <p className="text-sm text-slate-800/90 line-clamp-4">{postIt.content}</p>
             )}
 
+            {(postIt.responsible || postIt.location) && (
+                <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-slate-700/80">
+                    {postIt.responsible && <span>Responsável: {postIt.responsible}</span>}
+                    {postIt.location && <span>Local: {postIt.location}</span>}
+                </div>
+            )}
+
             {(startDate || deadline) && (
                 <div className="mt-auto flex items-center justify-between text-xs text-slate-700/80 border-t border-black/10 pt-2">
                     {startDate && <span>Início: {startDate}</span>}

@@ -23,6 +23,8 @@ export default function PostItModal({ postIt, onClose }: PostItModalProps) { // 
     //const [endDate, setEndDate] = useState(postIt.end_date ?? '');
     const [deadline, setDeadline] = useState(postIt.deadline ?? '');
     const [done, setDone] = useState(postIt.done);
+    const [responsible, setResponsible] = useState(postIt.responsible ?? '');
+    const [location, setLocation] = useState(postIt.location ?? '');
 
     // Show delete confirmation buttons
     const [isConfirmationButtonVisible, setIsConfirmationButtonVisible] = useState(false);
@@ -51,6 +53,8 @@ export default function PostItModal({ postIt, onClose }: PostItModalProps) { // 
                 end_date: null,
                 deadline: deadline || null,
                 done,
+                responsible: responsible || null,
+                location: location || null,
             },
             { onSuccess: onClose },
         );
@@ -144,8 +148,26 @@ export default function PostItModal({ postIt, onClose }: PostItModalProps) { // 
                         </select>
                     </label>
                     <label className="text-xs font-medium text-slate-700">
+                        Responsável
+                        <input
+                            className="mt-1 w-full rounded bg-white/40 px-2 py-1.5 text-sm outline-none focus:bg-white/60"
+                            value={responsible}
+                            onChange={(e) => setResponsible(e.target.value)}
+                            placeholder="Nome"
+                        />
                     </label>
-                    <button 
+                    <label className="text-xs font-medium text-slate-700">
+                        Localização
+                        <input
+                            className="mt-1 w-full rounded bg-white/40 px-2 py-1.5 text-sm outline-none focus:bg-white/60"
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                            placeholder="Local"
+                        />
+                    </label>
+                    <label className="text-xs font-medium text-slate-700">
+                    </label>
+                    <button
                         onClick={() => setIsConfirmationButtonVisible(true)}
                         className="rounded bg-red-500 hover:bg-red-800 text-white p-2 text-sm font-small font-bold inline-flex items-center gap-x-1.5"
                     >

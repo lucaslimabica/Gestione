@@ -1,6 +1,6 @@
 // Hand-written until `npm run db:types` can be run against the real project
 // (requires SUPABASE_PROJECT_ID in .env.local + `supabase login`).
-// Mirrors the `post_its`, `vehicles`, `documents` and `document_types` tables, which mirror src/types.tsx's shapes.
+// Mirrors the `post_its`, `vehicles`, `documents`, `document_types`, `incomes` and `outcomes` tables, which mirror src/types.tsx's shapes.
 
 import type { BudgetContent } from "@/types";
 
@@ -19,6 +19,8 @@ export interface Database {
                     end_date: string | null;
                     deadline: string | null;
                     done: boolean | null;
+                    responsible: string | null;
+                    location: string | null;
                 };
                 Insert: {
                     id?: string;
@@ -31,6 +33,8 @@ export interface Database {
                     end_date?: string | null;
                     deadline?: string | null;
                     done?: boolean | null;
+                    responsible?: string | null;
+                    location?: string | null;
                 };
                 Update: {
                     id?: string;
@@ -43,6 +47,8 @@ export interface Database {
                     end_date?: string | null;
                     deadline?: string | null;
                     done?: boolean | null;
+                    responsible?: string | null;
+                    location?: string | null;
                 };
                 Relationships: [];
             };
@@ -130,6 +136,66 @@ export interface Database {
                     created_at?: string;
                     name?: string;
                     is_budget?: boolean;
+                };
+                Relationships: [];
+            };
+            incomes: {
+                Row: {
+                    id: string;
+                    created_at: string;
+                    description: string;
+                    value: number;
+                    due_date: string;
+                    paid: boolean;
+                    observation: string | null;
+                };
+                Insert: {
+                    id?: string;
+                    created_at?: string;
+                    description: string;
+                    value: number;
+                    due_date: string;
+                    paid?: boolean;
+                    observation?: string | null;
+                };
+                Update: {
+                    id?: string;
+                    created_at?: string;
+                    description?: string;
+                    value?: number;
+                    due_date?: string;
+                    paid?: boolean;
+                    observation?: string | null;
+                };
+                Relationships: [];
+            };
+            outcomes: {
+                Row: {
+                    id: string;
+                    created_at: string;
+                    description: string;
+                    value: number;
+                    due_date: string;
+                    paid: boolean;
+                    observation: string | null;
+                };
+                Insert: {
+                    id?: string;
+                    created_at?: string;
+                    description: string;
+                    value: number;
+                    due_date: string;
+                    paid?: boolean;
+                    observation?: string | null;
+                };
+                Update: {
+                    id?: string;
+                    created_at?: string;
+                    description?: string;
+                    value?: number;
+                    due_date?: string;
+                    paid?: boolean;
+                    observation?: string | null;
                 };
                 Relationships: [];
             };

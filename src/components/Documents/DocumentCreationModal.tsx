@@ -197,7 +197,7 @@ export default function DocumentCreationModal({ onClose }: DocumentCreationModal
                         </div>
 
                         <p className="text-right text-sm font-medium">
-                            Total: {totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                            Total: {totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'EUR' })}
                         </p>
                     </div>
                 )}

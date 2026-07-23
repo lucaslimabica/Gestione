@@ -253,7 +253,7 @@ export default function DocumentModal({ documentRow, onClose }: DocumentModalPro
                                 Baixar PDF
                             </button>
                             <p className="text-sm font-medium">
-                                Total: {totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                                Total: {totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'EUR' })}
                             </p>
                         </div>
                     </div>

@@ -17,11 +17,11 @@ export function Documents() {
     return (
         <div className="text-main">
             {/* Header */}
-            <div className="flex items-center justify-between">
-                <h1 className="text-4xl font-bold tracking-tight">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <h1 className="text-2xl font-bold tracking-tight sm:text-4xl">
                     Documentos
                 </h1>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                     <button
                         className="flex items-center gap-1.5 rounded-lg border border-border-main px-3 py-2 text-sm font-medium hover:bg-surface"
                         onClick={() => setIsManagingTypes(true)}

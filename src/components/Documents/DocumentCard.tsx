@@ -14,11 +14,7 @@ const formatDate = (date: string) => {
 };
 
 export default function DocumentCard({ documentRow, onClick }: DocumentCardProps) {
-    const source = documentRow.content
-        ? 'Gerado no Gestione'
-        : documentRow.file_url
-        ? 'Arquivo anexado'
-        : 'Sem arquivo';
+    const source = documentRow.file_url ? 'Arquivo anexado' : 'Sem arquivo';
 
     return (
         <div
@@ -42,8 +38,7 @@ export default function DocumentCard({ documentRow, onClick }: DocumentCardProps
             </p>
 
             <p className="border-t border-border-main pt-2 text-xs text-main/60">
-                {source}
-                {documentRow.content && ` · Nº ${documentRow.content.id_comercial}`}
+                {documentRow.content ? `Nº ${documentRow.content.id_comercial}` : source}
             </p>
 
             {documentRow.observation && (

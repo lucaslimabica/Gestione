@@ -9,6 +9,8 @@ export interface PostIt {
     end_date: string | null;
     done: boolean | null;
     deadline: string | null;
+    responsible: string | null; // Free text
+    location: string | null; // Free text
 }
 
 export interface Vehicle {
@@ -42,11 +44,31 @@ export interface DocumentType {
   is_budget: boolean; // If true, the document shows the Gestione-generated budget fields instead of a file link
 }
 
-// The budget-type to be used as PDF structure 
+// The budget-type to be used as PDF structure
 export interface BudgetContent {
   id_comercial: string; // Ex: "65/2026"
   description: string;
   items: Array<{ description: string; value: number }>;
   total_value: number;
   payment_terms: string;
+}
+
+export interface Income {
+  id: string;
+  created_at: string;
+  description: string;
+  value: number;
+  due_date: string;
+  paid: boolean;
+  observation: string | null;
+}
+
+export interface Outcome {
+  id: string;
+  created_at: string;
+  description: string;
+  value: number;
+  due_date: string;
+  paid: boolean;
+  observation: string | null;
 }

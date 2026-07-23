@@ -37,6 +37,24 @@ export const router = createBrowserRouter([
                 },
             },
 
+            // Entradas
+            {
+                path: 'incomes',
+                lazy: async () => {
+                    const { Incomes } = await import('@/routes/Incomes');
+                    return { Component: Incomes };
+                },
+            },
+
+            // Saídas
+            {
+                path: 'outcomes',
+                lazy: async () => {
+                    const { Outcomes } = await import('@/routes/Outcomes');
+                    return { Component: Outcomes };
+                },
+            },
+
             // Features, one line per feature
             //...futureRoutes, // A feature can export an array of routes, which is useful if the feature has multiple pages. The routes can be defined in the same file as the feature's main component for routesis setted, or in a separate file. This keeps all the feature's code together and makes it easy to move or remove the feature later.
 
