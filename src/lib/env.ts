@@ -12,4 +12,5 @@ function required(name: keyof ImportMetaEnv): string {
 export const env = {
     SUPABASE_URL: required('VITE_SUPABASE_URL'),
     SUPABASE_PUBLISHABLE_KEY: required('VITE_SUPABASE_PUBLISHABLE_KEY'),
+    COMPANY_NAME: required('VITE_COMPANY_NAME'),
 } as const;

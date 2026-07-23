@@ -28,10 +28,18 @@ export interface DocumentRow {
   id: string;
   created_at: string;
   document_name: string;
-  document_type: 'quote' | 'contract' | 'id_card' | 'license'; // possibles types
+  document_type: string; // Free text, matches a document_types.name managed by the user
   file_url: string | null; // Nullable if the quote is generated inside Gestione
   observation: string | null;
   content: BudgetContent | null; // Budget content if its Gestione Generated
+}
+
+// A user-managed document type, used to populate the "Tipo" selects
+export interface DocumentType {
+  id: string;
+  created_at: string;
+  name: string;
+  is_budget: boolean; // If true, the document shows the Gestione-generated budget fields instead of a file link
 }
 
 // The budget-type to be used as PDF structure 

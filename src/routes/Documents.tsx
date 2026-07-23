@@ -1,13 +1,18 @@
-import { Plus } from 'lucide-react';
+import { Plus, Tags } from 'lucide-react';
 import { useState } from 'react';
+
+import DocumentCard from '@/components/Documents/DocumentCard';
+import DocumentCreationModal from '@/components/Documents/DocumentCreationModal';
+import DocumentModal from '@/components/Documents/DocumentModal';
+import DocumentTypesModal from '@/components/Documents/DocumentTypesModal';
 import { useDocuments } from '@/hooks/useDocuments'
 import type { DocumentRow } from '@/types';
-import QuoteCard from '@/components/Quotes/QuoteCard';
 
 export function Documents() {
     const { data: documentList, isLoading, error } = useDocuments(); // Select from db
     const [selectedDocument, setSelectedDocument] = useState<DocumentRow | null>(null);
     const [isCreating, setIsCreating] = useState(false); // Status for creating a new doc
+    const [isManagingTypes, setIsManagingTypes] = useState(false); // Status for managing document types
 
     return (
         <div className="text-main">
@@ -16,13 +21,22 @@ export function Documents() {
                 <h1 className="text-4xl font-bold tracking-tight">
                     Documentos
                 </h1>
-                <button
-                    className="flex items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-sm font-medium text-white hover:bg-primary-hover"
-                    onClick={() => setIsCreating(true)}
-                >
-                    <Plus size={16} />
-                    Novo Documento
-                </button>
+                <div className="flex items-center gap-2">
+                    <button
+                        className="flex items-center gap-1.5 rounded-lg border border-border-main px-3 py-2 text-sm font-medium hover:bg-surface"
+                        onClick={() => setIsManagingTypes(true)}
+                    >
+                        <Tags size={16} />
+                        Tipos de documento
+                    </button>
+                    <button
+                        className="flex items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-sm font-medium text-white hover:bg-primary-hover"
+                        onClick={() => setIsCreating(true)}
+                    >
+                        <Plus size={16} />
+                        Novo Documento
+                    </button>
+                </div>
             </div>
             <div>
                 {/* Query DB Status */}
@@ -35,7 +49,7 @@ export function Documents() {
                     <p className="mt-4 text-main/60">Aqui ficarão seus Documentos</p> :
                     <div className="mt-6 flex flex-wrap gap-5">
                         {documentList?.map(document => (
-                            <QuoteCard
+                            <DocumentCard
                                 key={document.id}
                                 documentRow={document}
                                 onClick={() => setSelectedDocument(document)}
@@ -44,6 +58,21 @@ export function Documents() {
                     </div>
                 )}
             </div>
+
+            {selectedDocument && (
+                <DocumentModal
+                    documentRow={selectedDocument}
+                    onClose={() => setSelectedDocument(null)}
+                />
+            )}
+
+            {isCreating && (
+                <DocumentCreationModal onClose={() => setIsCreating(false)} />
+            )}
+
+            {isManagingTypes && (
+                <DocumentTypesModal onClose={() => setIsManagingTypes(false)} />
+            )}
         </div>
-   ) 
+   )
 }

@@ -1,6 +1,8 @@
 // Hand-written until `npm run db:types` can be run against the real project
 // (requires SUPABASE_PROJECT_ID in .env.local + `supabase login`).
-// Mirrors the `post_its` and `vehicles` tables, which mirror src/types.tsx's shapes.
+// Mirrors the `post_its`, `vehicles`, `documents` and `document_types` tables, which mirror src/types.tsx's shapes.
+
+import type { BudgetContent } from "@/types";
 
 export interface Database {
     public: {
@@ -77,6 +79,57 @@ export interface Database {
                     insurance_deadline?: string | null;
                     tax_deadline?: string | null;
                     observation?: string | null;
+                };
+                Relationships: [];
+            };
+            documents: {
+                Row: {
+                    id: string;
+                    created_at: string;
+                    document_name: string;
+                    document_type: string;
+                    file_url: string | null;
+                    observation: string | null;
+                    content: BudgetContent | null;
+                };
+                Insert: {
+                    id?: string;
+                    created_at?: string;
+                    document_name: string;
+                    document_type: string;
+                    file_url?: string | null;
+                    observation?: string | null;
+                    content?: BudgetContent | null;
+                };
+                Update: {
+                    id?: string;
+                    created_at?: string;
+                    document_name?: string;
+                    document_type?: string;
+                    file_url?: string | null;
+                    observation?: string | null;
+                    content?: BudgetContent | null;
+                };
+                Relationships: [];
+            };
+            document_types: {
+                Row: {
+                    id: string;
+                    created_at: string;
+                    name: string;
+                    is_budget: boolean;
+                };
+                Insert: {
+                    id?: string;
+                    created_at?: string;
+                    name: string;
+                    is_budget?: boolean;
+                };
+                Update: {
+                    id?: string;
+                    created_at?: string;
+                    name?: string;
+                    is_budget?: boolean;
                 };
                 Relationships: [];
             };
