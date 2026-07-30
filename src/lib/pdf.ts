@@ -82,7 +82,7 @@ export function generateBudgetPdf({ documentName, createdAt, content }: Generate
     doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
     doc.text(
-        "Lucas Reinheimer de Oliveira PT50 0018 0003 5354 0076 0206 8", 
+        "Lucas Reinheimer de Oliveira PT50001800036537970302075", 
         pageWidth / 2, 
         footerY - 5, 
         { align: 'center' }
