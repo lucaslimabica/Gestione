@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 
 import {
     useDocumentTypes,
-    useCreateDocumentType,
     useUpdateDocumentType,
     useDeleteDocumentType,
 } from "@/hooks/useDocumentTypes";
@@ -61,10 +60,6 @@ function DocumentTypeRow({ documentType }: { documentType: DocumentType }) {
 export default function DocumentTypesModal({ onClose }: DocumentTypesModalProps) {
     const { data: typesList, isLoading, error: loadError } = useDocumentTypes();
 
-    const [newName, setNewName] = useState('');
-    const [newIsBudget, setNewIsBudget] = useState(false);
-    const { mutate: create, isPending, error } = useCreateDocumentType();
-
     useEffect(() => { // This block is for the closer as 'Esc' is pressed
         const onKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') onClose();
@@ -72,13 +67,6 @@ export default function DocumentTypesModal({ onClose }: DocumentTypesModalProps)
         document.addEventListener('keydown', onKeyDown);
         return () => document.removeEventListener('keydown', onKeyDown);
     }, [onClose]);
-
-    const handleCreate = () => {
-        create(
-            { name: newName, is_budget: newIsBudget },
-            { onSuccess: () => { setNewName(''); setNewIsBudget(false); } },
-        );
-    };
 
     return (
         <div
@@ -110,36 +98,6 @@ export default function DocumentTypesModal({ onClose }: DocumentTypesModalProps)
                         <DocumentTypeRow key={documentType.id} documentType={documentType} />
                     ))}
                 </div>
-
-                <div className="mt-4 flex items-center gap-2 border-t border-border-main pt-3">
-                    <input
-                        className="w-full rounded bg-base px-2 py-1.5 text-sm outline-none focus:ring-2 focus:ring-primary"
-                        value={newName}
-                        onChange={(e) => setNewName(e.target.value)}
-                        placeholder="Novo tipo (ex: Seguro)"
-                    />
-                    <label className="flex shrink-0 items-center gap-1 text-xs text-main/70">
-                        <input
-                            type="checkbox"
-                            checked={newIsBudget}
-                            onChange={(e) => setNewIsBudget(e.target.checked)}
-                        />
-                        Gerado no Gestione
-                    </label>
-                    <button
-                        className="shrink-0 rounded bg-primary px-3 py-1.5 text-sm font-medium text-white hover:bg-primary-hover disabled:opacity-60"
-                        onClick={handleCreate}
-                        disabled={isPending || !newName.trim()}
-                    >
-                        + Adicionar
-                    </button>
-                </div>
-
-                {error && (
-                    <p className="mt-3 text-xs font-medium text-red-600">
-                        Não foi possível adicionar. Tente novamente.
-                    </p>
-                )}
             </div>
         </div>
     );

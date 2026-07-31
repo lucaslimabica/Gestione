@@ -26,7 +26,6 @@ response = (
     supabase.table("post_its")
     .select("created_at, title, content, deadline, responsible, location")
     .neq("done", True)
-    .limit(1)
     .execute()
 )
 # Access the data

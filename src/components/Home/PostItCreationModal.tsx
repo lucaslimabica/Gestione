@@ -1,24 +1,20 @@
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
+
 import { useCreatePostIt } from "@/hooks/usePostIts";
+import { PRIORITY_OPTIONS, getPriorityColor } from "@/lib/postIt";
 
 interface PostItCreationModalProps {
     onClose: () => void;
 }
 
-const PRIORITY_OPTIONS = [
-    { value: 1, label: 'Baixa' },
-    { value: 2, label: 'Média' },
-    { value: 3, label: 'Alta' },
-];
-
-const DEFAULT_COLOR = '#FEF08A';
-
 export default function PostItCreationModal({ onClose }: PostItCreationModalProps) { // Whitout any PostIt as parameter cause we are about to create it
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [color, setColor] = useState(DEFAULT_COLOR);
     const [priority, setPriority] = useState(1);
+    const [color, setColor] = useState(getPriorityColor(1));
+    // Once the user manually picks a color, priority changes stop overriding it
+    const [colorTouched, setColorTouched] = useState(false);
     const [startDate, setStartDate] = useState('');
     // const [endDate, setEndDate] = useState('');
     const [deadline, setDeadline] = useState('');
@@ -96,7 +92,10 @@ export default function PostItCreationModal({ onClose }: PostItCreationModalProp
                             type="color"
                             className="mt-1 h-8 w-full cursor-pointer rounded border border-black/10"
                             value={color}
-                            onChange={(e) => setColor(e.target.value)}
+                            onChange={(e) => {
+                                setColor(e.target.value);
+                                setColorTouched(true);
+                            }}
                         />
                     </label>
                     <label className="text-xs font-medium text-slate-700">
@@ -104,7 +103,11 @@ export default function PostItCreationModal({ onClose }: PostItCreationModalProp
                         <select
                             className="mt-1 w-full rounded bg-white/40 px-2 py-1.5 text-sm outline-none focus:bg-white/60"
                             value={priority}
-                            onChange={(e) => setPriority(Number(e.target.value))}
+                            onChange={(e) => {
+                                const newPriority = Number(e.target.value);
+                                setPriority(newPriority);
+                                if (!colorTouched) setColor(getPriorityColor(newPriority));
+                            }}
                         >
                             {PRIORITY_OPTIONS.map((opt) => (
                                 <option key={opt.value} value={opt.value}>{opt.label}</option>

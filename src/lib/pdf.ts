@@ -11,7 +11,7 @@ interface GenerateBudgetPdfParams {
     content: BudgetContent;
 }
 
-export function generateBudgetPdf({ documentName, createdAt, content }: GenerateBudgetPdfParams) {
+function buildBudgetPdf({ documentName, createdAt, content }: GenerateBudgetPdfParams): jsPDF {
     const doc = new jsPDF({ unit: 'mm', format: 'a4' });
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
@@ -96,5 +96,15 @@ export function generateBudgetPdf({ documentName, createdAt, content }: Generate
         { align: 'center' }
     );
 
-    doc.save(`${documentName || 'orcamento'}.pdf`);
+    return doc;
+}
+
+export function generateBudgetPdf(params: GenerateBudgetPdfParams) {
+    const doc = buildBudgetPdf(params);
+    doc.save(`${params.documentName || 'orcamento'}.pdf`);
+}
+
+export function getBudgetPdfBlob(params: GenerateBudgetPdfParams): Blob {
+    const doc = buildBudgetPdf(params);
+    return doc.output('blob');
 }

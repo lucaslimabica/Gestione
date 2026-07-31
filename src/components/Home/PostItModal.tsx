@@ -1,6 +1,8 @@
 import { X, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
+
 import { useUpdatePostIt, useDeletePostIt } from "@/hooks/usePostIts";
+import { PRIORITY_OPTIONS, getPriorityColor } from "@/lib/postIt";
 import type { PostIt } from "@/types";
 
 interface PostItModalProps {
@@ -8,17 +10,13 @@ interface PostItModalProps {
     onClose: () => void;
 }
 
-const PRIORITY_OPTIONS = [
-    { value: 1, label: 'Baixa' },
-    { value: 2, label: 'Média' },
-    { value: 3, label: 'Alta' },
-];
-
 export default function PostItModal({ postIt, onClose }: PostItModalProps) { // Here it uses the PostIt already created
     const [title, setTitle] = useState(postIt.title);
     const [content, setContent] = useState(postIt.content ?? '');
-    const [color, setColor] = useState(postIt.color || '#FEF08A');
     const [priority, setPriority] = useState(postIt.priority);
+    const [color, setColor] = useState(postIt.color || getPriorityColor(postIt.priority));
+    // Once the user manually picks a color, priority changes stop overriding it
+    const [colorTouched, setColorTouched] = useState(false);
     const [startDate, setStartDate] = useState(postIt.start_date ?? '');
     //const [endDate, setEndDate] = useState(postIt.end_date ?? '');
     const [deadline, setDeadline] = useState(postIt.deadline ?? '');
@@ -101,7 +99,10 @@ export default function PostItModal({ postIt, onClose }: PostItModalProps) { // 
                             type="color"
                             className="mt-1 h-8 w-full cursor-pointer rounded border border-black/10"
                             value={color}
-                            onChange={(e) => setColor(e.target.value)}
+                            onChange={(e) => {
+                                setColor(e.target.value);
+                                setColorTouched(true);
+                            }}
                         />
                     </label>
                     <label className="text-xs font-medium text-slate-700">
@@ -109,7 +110,11 @@ export default function PostItModal({ postIt, onClose }: PostItModalProps) { // 
                         <select
                             className="mt-1 w-full rounded bg-white/40 px-2 py-1.5 text-sm outline-none focus:bg-white/60"
                             value={priority}
-                            onChange={(e) => setPriority(Number(e.target.value))}
+                            onChange={(e) => {
+                                const newPriority = Number(e.target.value);
+                                setPriority(newPriority);
+                                if (!colorTouched) setColor(getPriorityColor(newPriority));
+                            }}
                         >
                             {PRIORITY_OPTIONS.map((opt) => (
                                 <option key={opt.value} value={opt.value}>{opt.label}</option>
