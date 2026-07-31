@@ -1,11 +1,11 @@
 // The modal/pop-up to be shown as you click on the document card
 
-import { X, Trash2, Download, FileDown, Share2 } from "lucide-react";
+import { X, Trash2, Download, FileDown } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { useUpdateDocument, useDeleteDocument } from "@/hooks/useDocuments";
 import { useDocumentTypes } from "@/hooks/useDocumentTypes";
-import { generateBudgetPdf, getBudgetPdfBlob } from "@/lib/pdf";
+import { generateBudgetPdf } from "@/lib/pdf";
 import type { DocumentRow } from "@/types";
 
 interface DocumentModalProps {
@@ -98,21 +98,6 @@ export default function DocumentModal({ documentRow, onClose }: DocumentModalPro
 
     const handleDownloadPdf = () => {
         generateBudgetPdf(buildPdfParams());
-    };
-
-    const handleShareWhatsApp = async () => {
-        const blob = getBudgetPdfBlob(buildPdfParams());
-        const file = new File([blob], `${documentName || 'orcamento'}.pdf`, { type: 'application/pdf' });
-
-        if (navigator.canShare?.({ files: [file] })) {
-            try {
-                await navigator.share({ files: [file], title: documentName, text: `Orçamento: ${documentName}` });
-            } catch {
-                // User cancelled the share sheet, nothing to do
-            }
-        } else {
-            window.open(`https://wa.me/?text=${encodeURIComponent(`Orçamento: ${documentName}`)}`, '_blank');
-        }
     };
 
     // The forms

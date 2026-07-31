@@ -1,4 +1,4 @@
-import { Plus, Tags } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
 import DocumentCard from '@/components/Documents/DocumentCard';
