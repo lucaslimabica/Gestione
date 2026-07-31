@@ -26,6 +26,7 @@ response = (
     supabase.table("post_its")
     .select("created_at, title, content, deadline, responsible, location")
     .neq("done", True)
+    .limit(1)
     .execute()
 )
 # Access the data
@@ -39,4 +40,3 @@ data = response.data
 for post in data:
     sendPlainAlert("351914595490", post["title"], post["deadline"], post["content"], post["responsible"], post["location"])
     time.sleep(10)
-print(data, end="\n")
